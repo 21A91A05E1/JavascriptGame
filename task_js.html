@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors Game</title>
+    <link rel="stylesheet" type="text/css" href="style_js.css">
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        <div class="choices">
+            <button id="rock"><img src="rock.jpg"></button>
+            <button id="paper"><img src="paper.jpg"></button>
+            <button id="scissors"><img src="scissor.jpg"></button>
+        </div>
+        <div class="result">
+            <p id="message">Make your choice...</p>
+            <p id="player-choice">Player choice: </p>
+            <p id="computer-choice">Computer choice: </p>
+            <p id="score">Score: Player 0 Vs Computer 0</p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const choices = ["rock", "paper", "scissors"];
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function computerChoice() {
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        function playRound(playerSelection) {
+            const computerSelection = computerChoice();
+            document.getElementById("player-choice").textContent = `Player choice: ${playerSelection}`;
+            document.getElementById("computer-choice").textContent = `Computer choice: ${computerSelection}`;
+
+            if (playerSelection === computerSelection) {
+                return "It's a tie!";
+            } else if (
+                (playerSelection === "rock" && computerSelection === "scissors") ||
+                (playerSelection === "paper" && computerSelection === "rock") ||
+                (playerSelection === "scissors" && computerSelection === "paper")
+            ) {
+            playerScore++;
+            return "You win!";
+            } else {
+                computerScore++;
+                return "Computer wins!";
+            }
+        }
+
+        function updateScore() {
+            const scoreElement = document.getElementById("score");
+            scoreElement.textContent = `Score: Player ${playerScore} || Computer ${computerScore}`;
+        }
+
+        function showMessage(message) {
+            const messageElement = document.getElementById("message");
+            messageElement.textContent = message;
+        }
+        document.getElementById("rock").addEventListener("click", () => {
+        const result = playRound("rock");
+        showMessage(result);
+        updateScore();
+        });
+
+        document.getElementById("paper").addEventListener("click", () => {
+        const result = playRound("paper");
+        showMessage(result);
+        updateScore();
+        });
+
+        document.getElementById("scissors").addEventListener("click", () => {
+        const result = playRound("scissors");
+        showMessage(result);
+        updateScore();
+        });
+    </script>
+</body>
+</html>
